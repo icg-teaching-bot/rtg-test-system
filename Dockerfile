@@ -32,9 +32,6 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 ENV NVIDIA_REQUIRE_CUDA "cuda>=10.1 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411"
 
-# Download the official headers from github.com/KhronosGroup
-FROM ubuntu:16.04 as khronos
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates \
         git && \
@@ -66,6 +63,3 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get update && apt-get 
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-COPY --from=khronos /usr/local/include /usr/local/include
-
-COPY usr /usr
