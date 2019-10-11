@@ -54,9 +54,6 @@ RUN git clone https://github.com/KhronosGroup/EGL-Registry.git && cd EGL-Registr
 RUN git clone --branch=mesa-17.3.3 --depth=1 https://gitlab.freedesktop.org/mesa/mesa.git && cd mesa && \
     cp include/GL/gl.h include/GL/gl_mangle.h /usr/local/include/GL/
 
-
-FROM ${from}
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
         pkg-config \
         libxau-dev libxau-dev:i386 \
