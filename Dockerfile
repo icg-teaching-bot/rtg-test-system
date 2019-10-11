@@ -32,9 +32,6 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 ENV NVIDIA_REQUIRE_CUDA "cuda>=10.1 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411"
 
-
-ARG from
-
 # Download the official headers from github.com/KhronosGroup
 FROM ubuntu:16.04 as khronos
 
@@ -54,14 +51,20 @@ RUN git clone https://github.com/KhronosGroup/EGL-Registry.git && cd EGL-Registr
 RUN git clone --branch=mesa-17.3.3 --depth=1 https://gitlab.freedesktop.org/mesa/mesa.git && cd mesa && \
     cp include/GL/gl.h include/GL/gl_mangle.h /usr/local/include/GL/
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        pkg-config \
-        libxau-dev libxau-dev:i386 \
-        libxdmcp-dev libxdmcp-dev:i386 \
-        libxcb1-dev libxcb1-dev:i386 \
-        libxext-dev libxext-dev:i386 \
-        libx11-dev libx11-dev:i386 && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install --yes --no-install-recommends software-properties-common
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc-8 g++-8 \
+    cmake \
+    ninja-build \
+    xorg-dev \
+    libgl1-mesa-dev \
+    xvfb \
+    imagemagick \
+    ghostscript \
+    python3-numpy \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=khronos /usr/local/include /usr/local/include
 
