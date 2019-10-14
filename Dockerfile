@@ -13,6 +13,8 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get update && apt-get 
     imagemagick \
     ghostscript \
     python3-numpy \
+    x11-utils \
+    xdotool \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
