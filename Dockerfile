@@ -17,6 +17,7 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get update && apt-get 
     xdotool \
     ffmpeg \
     wget \
+    unzip \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
